@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.sf.StationMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.pojo.sf.Station" >
+    <id column="stationid" property="stationid" jdbcType="INTEGER" />
+    <result column="stationname" property="stationname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stationid, stationname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from station
+    where stationid = #{stationid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询岗位 -->
+  <select id="querystation" resultMap="BaseResultMap">
+  	SELECT * FROM station
+  </select>
+  
+  <!-- 新增岗位 -->
+   <insert id="insert" parameterType="com.accp.pojo.sf.Station" >
+    insert into station (stationid, stationname)
+    values (#{station.stationid,jdbcType=INTEGER}, #{station.stationname,jdbcType=VARCHAR})
+  </insert>
+  
+  <!-- 删除岗位 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from station
+    where stationid = #{stationid,jdbcType=INTEGER}
+  </delete>
+  
+  <!-- 修改岗位 -->
+ <update id="updateByPrimaryKey" parameterType="com.accp.pojo.sf.Station" >
+    update station
+    set stationname = #{stationname,jdbcType=VARCHAR}
+    where stationid = #{stationid,jdbcType=INTEGER}
+  </update>
+ 
+  <insert id="insertSelective" parameterType="com.accp.pojo.sf.Station" >
+    insert into station
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stationid != null" >
+        stationid,
+      </if>
+      <if test="stationname != null" >
+        stationname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stationid != null" >
+        #{stationid,jdbcType=INTEGER},
+      </if>
+      <if test="stationname != null" >
+        #{stationname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.pojo.sf.Station" >
+    update station
+    <set >
+      <if test="stationname != null" >
+        stationname = #{stationname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where stationid = #{stationid,jdbcType=INTEGER}
+  </update>
+  
+</mapper>
